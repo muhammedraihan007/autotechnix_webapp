@@ -20,7 +20,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "react-scripts start"
+    "dev": "vite",
+    "build": "vite build"
   },
   "browserslist": {
     "production": [
@@ -33,5 +34,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "vite": "^8.0.1"
   }
 }
