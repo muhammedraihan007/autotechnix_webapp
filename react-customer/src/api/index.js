@@ -1,18 +1,8 @@
 import axios from 'axios'
-const api = axios.create({ baseURL: '/api' })
-api.interceptors.request.use(c => {
-  const t = localStorage.getItem('at_token')
-  if (t) c.headers.Authorization = 'Bearer ' + t
-  return c
-})
-api.interceptors.response.use(r => r, e => {
-  if (e.response?.status === 401) {
-    localStorage.removeItem('at_token')
-    localStorage.removeItem('at_user')
-    window.location.href = '/login'
-  }
-  return Promise.reject(e)
-})
+const BASE = 'https://opulent-space-broccoli-gr446xj555ghw7xq-5000.app.github.dev/api'
+const api = axios.create({ baseURL: BASE })
+api.interceptors.request.use(c => { const t = localStorage.getItem('at_token'); if (t) c.headers.Authorization = 'Bearer ' + t; return c })
+api.interceptors.response.use(r => r, e => { if (e.response?.status === 401) { localStorage.removeItem('at_token'); localStorage.removeItem('at_user'); window.location.href = '/login' } return Promise.reject(e) })
 export default api
 export const authAPI = { register: d => api.post('/auth/register', d), login: d => api.post('/auth/login', d), me: () => api.get('/auth/me'), updateProfile: d => api.put('/auth/profile', d) }
 export const servicesAPI = { getAll: cat => api.get('/services', { params: cat ? { category: cat } : {} }) }
